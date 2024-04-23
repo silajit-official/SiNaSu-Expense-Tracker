@@ -20,6 +20,7 @@ namespace ExpTracker.Controllers
 
         public IActionResult Index()
         {
+            //ViewBag.LoggedUser = "Silajit";
             return View();
         }
 
