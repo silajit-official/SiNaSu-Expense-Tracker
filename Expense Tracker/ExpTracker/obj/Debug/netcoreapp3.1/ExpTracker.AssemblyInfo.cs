@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExpTracker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32ae6d9d2d7352a255537a80ddce824ce10ff07a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da8ee210274a209ea8879508a24017e140d14eb0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExpTracker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExpTracker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,4 +1,5 @@
-﻿using ExpTracker.Models;
+﻿using ExpTracker.Data;
+using ExpTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,16 +13,24 @@ namespace ExpTracker.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly EXP_TRACKERContext _context;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _context = new EXP_TRACKERContext();
         }
 
         public IActionResult Index()
         {
             //ViewBag.LoggedUser = "Silajit";
-            return View();
+            var data = _context.Customer.Where(er=>er.CustPassword.Equals("1234")).ToList();
+            List<string> list = new List<string>();
+            foreach (var item in data)
+            {
+                list.Add(item.CustFname);
+            }
+            return View(list);
         }
 
         public IActionResult Privacy()
