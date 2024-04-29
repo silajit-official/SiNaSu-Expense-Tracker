@@ -1,0 +1,69 @@
+﻿@model Customer
+@{
+    ViewData["Title"] = "Signup Page";
+}
+<partial name="Partial_View/_Navbar" model="@null" />
+
+@{
+    string mode = ViewBag.mode;
+}
+
+@if (mode.Equals("signin"))
+{
+    <div class="container">
+        <form id="myForm" method="post" asp-controller="Expense" asp-action="SignupLogin">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label asp-for="CustFname" class="form-label">Enter First Name</label>
+                    <input asp-for="CustFname" class="form-control" placeholder="Enter First Name">
+                    <span asp-validation-for="CustFname" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CustLname" class="form-label">Enter Last Name</label>
+                    <input asp-for="CustLname" class="form-control" placeholder="Enter Last Name">
+                    <span asp-validation-for="CustLname" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CustEmail" class="form-label">Enter Email address</label>
+                    <input asp-for="CustEmail" class="form-control" placeholder="name@example.com">
+                    <span asp-validation-for="CustEmail" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CustPassword" class="form-label">Enter Password</label>
+                    <input type="password" asp-for="CustPassword" class="form-control" placeholder="Enter password">
+                    <span asp-validation-for="CustPassword" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Choose Profile Picture</label>
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container">
+        <form>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Enter Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput2" class="form-label">Enter Password</label>
+                    <input type="password" class="form-control" id="exampleFormControlInput2">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Log In</button>
+            </div>
+        </form>
+    </div>
+}
+
+
