@@ -1,4 +1,5 @@
 ﻿using ExpTracker.Data;
+using System.Linq;
 
 namespace ExpTracker.Repository
 {
@@ -22,6 +23,15 @@ namespace ExpTracker.Repository
             _context.Customer.Add(data);
             _context.SaveChanges();
             return data.CustFname;
+        }
+
+        public string Login(Models.Customer customer)
+        {
+            var retVal = _context.Customer.Where(val => val.CustEmail.Equals(customer.CustEmail) && val.CustPassword.Equals(customer.CustPassword)).ToList();
+            if (retVal.Count == 0)
+                return null;
+            else
+                return retVal[0].CustFname;
         }
     }
 }

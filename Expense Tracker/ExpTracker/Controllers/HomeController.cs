@@ -1,6 +1,7 @@
 ﻿using ExpTracker.Data;
 using ExpTracker.Models;
 using ExpTracker.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,16 +27,24 @@ namespace ExpTracker.Controllers
 
         public IActionResult Index(string signup=null)
         {
-            //ViewBag.LoggedUser = "Silajit";
-            if(signup!=null)
-                ViewBag.Signup = signup;
-            var data = _context.Customer.Where(er=>er.CustPassword.Equals("1234")).ToList();
-            List<string> list = new List<string>();
-            foreach (var item in data)
+            if (HttpContext.Session.GetString("Username") == null)
             {
-                list.Add(item.CustFname);
+                ViewBag.LoggedUser = null;
+                ViewBag.Signup = signup;
             }
-            return View(list);
+            else
+            {
+                ViewBag.LoggedUser = HttpContext.Session.GetString("Username").ToString();
+                ViewBag.Signup = signup;
+            }
+            
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("Username");
+            return RedirectToAction("Index", "Home");
         }
 
         
