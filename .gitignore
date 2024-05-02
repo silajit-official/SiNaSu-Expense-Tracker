@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Expense Tracker/ExpTracker/bin/Debug/netcoreapp3.1
+/Expense Tracker/ExpTracker/obj
+/Expense Tracker/ExpTracker/.vs
+/Expense Tracker/ExpTracker/ExpTracker.csproj.user

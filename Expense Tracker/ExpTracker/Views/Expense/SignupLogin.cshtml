@@ -1,0 +1,81 @@
+﻿@model Customer
+@{
+    ViewData["Title"] = "Signup Page";
+}
+<partial name="Partial_View/_Navbar" model="@null" />
+
+@{
+    string mode = ViewBag.mode;
+    string loginError = ViewBag.loginError;
+}
+
+@if (mode.Equals("signin"))
+{
+    <div class="container">
+        <form id="myForm" method="post" asp-controller="Expense" asp-action="SignupLogin" asp-route-mode="1">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label asp-for="CustFname" class="form-label">Enter First Name</label>
+                    <input asp-for="CustFname" class="form-control" placeholder="Enter First Name">
+                    <span asp-validation-for="CustFname" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CustLname" class="form-label">Enter Last Name</label>
+                    <input asp-for="CustLname" class="form-control" placeholder="Enter Last Name">
+                    <span asp-validation-for="CustLname" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CustEmail" class="form-label">Enter Email address</label>
+                    <input asp-for="CustEmail" class="form-control" placeholder="name@example.com">
+                    <span asp-validation-for="CustEmail" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CustPassword" class="form-label">Enter Password</label>
+                    <input type="password" asp-for="CustPassword" class="form-control" placeholder="Enter password">
+                    <span asp-validation-for="CustPassword" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Choose Profile Picture</label>
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+        </form>
+    </div>
+}
+else
+{
+        
+    
+    <div class="container">
+        <form method="post" asp-controller="Expense" asp-action="SignupLogin" asp-route-mode="2">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label asp-for="CustEmail" class="form-label">Enter Email address</label>
+                    <input asp-for="CustEmail" class="form-control" placeholder="name@example.com">
+                    <span asp-validation-for="CustEmail" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CustPassword" class="form-label">Enter Password</label>
+                    <input asp-for="CustPassword" type="password" class="form-control" placeholder="Enter Password">
+                    <span asp-validation-for="CustPassword" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="CustFname" value="1"/>
+                <input type="hidden" asp-for="CustLname" value="1" />
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </div>
+            @if (loginError.Equals("1"))
+            {
+                <span class="text-danger">The Email or password is wrong</span>
+            }
+        </form>
+        
+    </div>
+    
+}
+
+

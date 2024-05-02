@@ -1,0 +1,35 @@
+﻿<nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://economictimes.indiatimes.com/markets" target="_blank">Share Market</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+            </ul>
+            @if (Model!=null)
+            {
+                <h3 style="color:white">Welcome @Model</h3>
+                <a asp-action="Logout" asp-controller="Home" class="btn btn-danger mx-3">Logout</a>
+            }
+            else
+            {
+                <a asp-controller="Expense" asp-action="SignupLogin" asp-route-mode="2" class="btn btn-outline-primary">Login</a>
+                <a asp-controller="Expense" asp-action="SignupLogin" asp-route-mode="1" class="btn btn-outline-success mx-2">Register</a>
+
+                
+
+               
+            }
+        </div>
+    </div>
+</nav>
