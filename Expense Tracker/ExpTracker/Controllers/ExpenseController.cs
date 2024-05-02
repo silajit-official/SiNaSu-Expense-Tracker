@@ -23,6 +23,11 @@ namespace ExpTracker.Controllers
                 if (ModelState.IsValid)
                 {
                     name = _repositoy.AddNewCustomer(customer);
+                    if(name.Equals("-1"))
+                    {
+                        ModelState.AddModelError("CustEmail", "Email Already exist. Please use another Email for registering");
+                        return View();
+                    }
                     return RedirectToAction("Index", "Home", new { signup = name });
                 }
                 return View();
@@ -30,7 +35,8 @@ namespace ExpTracker.Controllers
             else
             {
                 ViewBag.mode = "login";
-                if(ModelState.IsValid)
+                ViewBag.loginError = "0";
+                if (ModelState.IsValid)
                 {
                     string name= _repositoy.Login(customer);
                     if (name != null)

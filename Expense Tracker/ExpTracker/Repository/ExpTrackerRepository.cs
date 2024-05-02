@@ -1,5 +1,8 @@
 ﻿using ExpTracker.Data;
+using Microsoft.Data.SqlClient;
+using System.Data;
 using System.Linq;
+using Dapper;
 
 namespace ExpTracker.Repository
 {
@@ -20,6 +23,12 @@ namespace ExpTracker.Repository
                 CustPassword = customer.CustPassword,
                 CustImageUrl = customer.CustImageUrl,
             };
+            IDbConnection db = new SqlConnection("Server=(localdb)\\MSSQLLocalDB;Database=EXP_TRACKER;Trusted_Connection=True;");
+            int retVal = db.ExecuteScalar<int>("CHECK_EMAIL", new { EMAIL = data.CustEmail }, commandType: CommandType.StoredProcedure);
+            if(retVal == 0)
+            {
+                return "-1";
+            }
             _context.Customer.Add(data);
             _context.SaveChanges();
             return data.CustFname;

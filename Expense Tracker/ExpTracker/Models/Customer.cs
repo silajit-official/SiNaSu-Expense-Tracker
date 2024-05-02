@@ -1,4 +1,5 @@
 ﻿using ExpTracker.Helper.Validations;
+using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 
 namespace ExpTracker.Models
