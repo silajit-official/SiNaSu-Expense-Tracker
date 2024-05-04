@@ -1,4 +1,5 @@
 ﻿using ExpTracker.Models;
+using System.Collections.Generic;
 
 namespace ExpTracker.Repository
 {
@@ -6,5 +7,8 @@ namespace ExpTracker.Repository
     {
         string AddNewCustomer(Customer customer);
         string Login(Customer customer);
+        int AddExpenseCategory(ExpenseCategory expenseCategory);
+        List<ExpenseCategory> ViewAllExpenseCategoryName();
+        int DeleteCatgoryByID(int id);
     }
 }

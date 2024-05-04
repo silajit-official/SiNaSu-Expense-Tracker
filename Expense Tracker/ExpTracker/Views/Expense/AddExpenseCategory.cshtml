@@ -1,0 +1,32 @@
+﻿@model ExpenseCategory
+@{
+    ViewData["Title"] = "AddExpenseCategory";
+}
+
+<partial name="Partial_View/_Navbar" model="@ViewBag.username" />
+
+<div class="container my-3">
+    <form method="post" asp-action="AddExpenseCategory" asp-controller="Expense">
+        <div class="mb-3">
+            <label asp-for="EcExpenseName" class="form-label">Enter Category name</label>
+            <input asp-for="EcExpenseName" class="form-control" placeholder="Enter the Category name">
+            <span asp-validation-for="EcExpenseName" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Category</button>
+
+        @if (ViewBag.statusMessage!=null)
+        {
+            string message = ViewBag.statusMessage;
+            if (message.Equals("0"))
+            {
+                <span class="text-danger">Same Expense Category already exists. Please add another one.!</span>
+            }
+            else
+            {
+                <span class="text-success">Expense added successfully..!!</span>
+            }
+
+        }
+    </form>
+</div>
+

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ExpenseCategory>
+
+@{
+    ViewData["Title"] = "ViewAllExpenseCategoryName";
+}
+
+<partial name="Partial_View/_Navbar" model="@ViewBag.username" />
+
+<div class="container my-5">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Category ID</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Delete Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.SNO</td>
+                    <td>CAT_@item.EcId</td>
+                    <td>@item.EcExpenseName</td>
+                    <td><a asp-controller="Expense" asp-action="DeleteCatgoryByID" asp-route-id="@item.EcId" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

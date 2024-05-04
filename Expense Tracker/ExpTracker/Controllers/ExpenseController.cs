@@ -2,7 +2,9 @@
 using ExpTracker.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.Generic;
 
 namespace ExpTracker.Controllers
 {
@@ -70,7 +72,53 @@ namespace ExpTracker.Controllers
             return View();
         }
 
-        
+        public IActionResult AddExpenseCategory(string statusMessage=null)
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if(username == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.statusMessage = statusMessage;
+            ViewBag.username = username;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddExpenseCategory(ExpenseCategory expenseCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                int retVal=_repositoy.AddExpenseCategory(expenseCategory);
+                return RedirectToAction("AddExpenseCategory", "Expense", new { statusMessage = retVal.ToString() });
+            }
+            return View();
+        }
+
+        public IActionResult ViewAllExpenseCategoryName()
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.username = username;
+            List<ExpenseCategory> expenseCategories=_repositoy.ViewAllExpenseCategoryName();
+            return View(expenseCategories);
+        }
+
+        public IActionResult DeleteCatgoryByID(int id)
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            int retVal=_repositoy.DeleteCatgoryByID(id);
+            return RedirectToAction("ViewAllExpenseCategoryName","Expense");
+        }
+
 
     }
 }
