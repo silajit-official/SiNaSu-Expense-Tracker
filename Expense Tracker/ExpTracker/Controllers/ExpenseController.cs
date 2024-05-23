@@ -40,10 +40,12 @@ namespace ExpTracker.Controllers
                 ViewBag.loginError = "0";
                 if (ModelState.IsValid)
                 {
-                    string name= _repositoy.Login(customer);
-                    if (name != null)
+                    Data.Customer retV= _repositoy.Login(customer);
+                    //string name= retV.CustFname;
+                    if (retV != null)
                     {
-                        HttpContext.Session.SetString("Username",name);
+                        HttpContext.Session.SetString("Username",retV.CustFname);
+                        HttpContext.Session.SetString("CustID",retV.CustId.ToString());
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -117,6 +119,80 @@ namespace ExpTracker.Controllers
             }
             int retVal=_repositoy.DeleteCatgoryByID(id);
             return RedirectToAction("ViewAllExpenseCategoryName","Expense");
+        }
+
+
+        public IActionResult AddCustomerExpense(string statusMessage=null)
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.username = username;
+            ViewBag.statusMessage = statusMessage;
+            List<ExpenseCategory> expenseCategories = _repositoy.ViewAllExpenseCategoryName();
+            ViewBag.expenseCategories = expenseCategories;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddCustomerExpense(CustomerExpense customerExpense)
+        {
+            string custID= HttpContext.Session.GetString("CustID");
+            CustomerExpense data = new CustomerExpense {
+                CE_CUST_ID=long.Parse(custID),
+                CE_EC_ID=customerExpense.CE_EC_ID,
+                CE_ADDED_ON=customerExpense.CE_ADDED_ON,
+                AMOUNT=customerExpense.AMOUNT
+            };
+            if(ModelState.IsValid)
+            {
+                int retVal = _repositoy.AddCustomerExpense(data);
+                if (retVal == 1)
+                {
+                    return RedirectToAction("AddCustomerExpense", "Expense", new { statusMessage = "1" });
+                }
+                else
+                    return RedirectToAction("AddCustomerExpense", "Expense", new { statusMessage = "0" });
+
+            }
+            return View();
+        }
+
+        public IActionResult ViewCustomerExpense(int amount=-1)
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.username = username;
+            ViewBag.amount = amount;
+            List<ExpenseCategory> expenseCategories = _repositoy.ViewAllExpenseCategoryName();
+            ViewBag.expenseCategories = expenseCategories;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ViewCustomerExpense(ViewCustomerExpense customerExpense)
+        {
+            List<ExpenseCategory> expenseCategories = _repositoy.ViewAllExpenseCategoryName();
+            ViewBag.expenseCategories = expenseCategories;
+            if (ModelState.IsValid)
+            {
+                ViewCustomerExpense obj = new ViewCustomerExpense
+                {
+                    EC_ID = customerExpense.EC_ID,
+                    START_DATE = customerExpense.START_DATE,
+                    END_DATE = customerExpense.END_DATE,
+                    CUST_ID=Int32.Parse(HttpContext.Session.GetString("CustID"))
+            };
+                int retVal=_repositoy.ViewCustomerExpense(obj);
+                return RedirectToAction("ViewCustomerExpense", "Expense", new { amount = retVal });
+            }
+            ViewBag.amount =-1;
+            return View();
         }
 
 

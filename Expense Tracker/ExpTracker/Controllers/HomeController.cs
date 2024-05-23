@@ -44,6 +44,7 @@ namespace ExpTracker.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("Username");
+            HttpContext.Session.Remove("CustID");
             return RedirectToAction("Index", "Home");
         }
 

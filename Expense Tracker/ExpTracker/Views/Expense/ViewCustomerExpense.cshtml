@@ -1,0 +1,44 @@
+﻿@model ViewCustomerExpense
+@{
+    ViewData["Title"] = "ViewCustomerExpense";
+}
+@{
+    int amount = ViewBag.amount;
+}
+<partial name="Partial_View/_Navbar" model="@ViewBag.username" />
+
+<div class="container">
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="EC_ID" class="form-label">Select Category</label>
+            <select class="form-select" aria-label="Default select example" asp-for="EC_ID">
+                <option selected>Open this select menu</option>
+                <option value="0">Total Expense</option>
+                @foreach (var item in ViewBag.expenseCategories)
+                {
+                    <option value="@item.EcId">@item.EcExpenseName</option>
+                }
+            </select>
+            <span asp-validation-for="EC_ID" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="START_DATE" class="form-label">Select the Start date</label>
+            <input asp-for="START_DATE" type="date" class="form-control" placeholder="Enter Start Date" />
+            <span asp-validation-for="START_DATE" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="END_DATE" class="form-label">Select the End date</label>
+            <input asp-for="END_DATE" type="date" class="form-control" placeholder="Enter End Date" />
+            <span asp-validation-for="END_DATE" class="text-danger"></span>
+        </div>
+        <input hidden value="1" asp-for="CUST_ID"/>
+        <button type="submit" class="btn btn-success">Check the Expense</button>
+    </form>
+    @if (amount!=-1)
+    {
+        <div class="container my-5">
+            <h3>The Total amount is: @ViewBag.amount</h3>
+        </div>
+    }
+</div>
+

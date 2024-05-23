@@ -1,0 +1,47 @@
+﻿@model CustomerExpense
+@{
+    ViewData["Title"] = "AddCustomerExpense";
+}
+
+<partial name="Partial_View/_Navbar" model="@ViewBag.username" />
+
+<div class="container my-5">
+    <form method="post" asp-controller="Expense" asp-action="AddCustomerExpense">
+        <div class="mb-3">
+            <label asp-for="CE_EC_ID" class="form-label">Select Category</label>
+            <select class="form-select" aria-label="Default select example" asp-for="CE_EC_ID">
+                <option selected>Open this select menu</option>
+                @foreach (var item in ViewBag.expenseCategories)
+                {
+                    <option value="@item.EcId">@item.EcExpenseName</option>
+                }
+            </select>
+            <span asp-validation-for="CE_EC_ID" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="CE_ADDED_ON" class="form-label">Select the date when expense was made</label>
+            <input asp-for="CE_ADDED_ON" type="date" class="form-control" placeholder="Enter the Date" />
+            <span asp-validation-for="CE_ADDED_ON" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AMOUNT" class="form-label">Enter the Amount</label>
+            <input asp-for="AMOUNT" class="form-control" placeholder="Enter the Amount" />
+            <span asp-validation-for="AMOUNT" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success">Add Expense</button>
+    </form>
+
+    @if (ViewBag.statusMessage!=null)
+    {
+        string val = ViewBag.statusMessage;
+        if (val.Equals("1"))
+        {
+            <span class="text-success">Expense Added Successfully..!!</span>
+        }
+        else
+        {
+            <span class="text-danger">Date is Future Date..!!</span>
+        }
+    }
+</div>
+
